@@ -10,7 +10,7 @@ OHDSI study repos are designed to have information in the README.md (where you a
 2. RunStudy - the characterization package to evaluate Target-Stratum-Feature pairings computing cohort characteristics and creating tables/visualizations to summarize differences between groups.
 
 #### *I have a problem running the code or want to contribute a fix or enhancement.*
-Please review the questions below, and if that doesn't answer it consider filing an issue in the Github tracker for the project: https://github.com/ohdsi-studies/PioneerWatchfulWaiting/issues
+Please review the questions below, and if that doesn't answer it consider filing an issue in the Github tracker for the project: https://github.com/kiseleveco/DaSHDiagnostic/issues
 
 #### *I don't understand the organization of this Github Repo.*
 The study repo has the following major pieces:
@@ -44,6 +44,16 @@ If you finish running a study package and upload results to the SFTP, please pos
 - Suggested: 25 GB of free disk space
 
 See [this video](https://youtu.be/DjVgbBGK4jM) for instructions on how to set up the R environment on Windows.
+
+## Setup
+
+1. Clone the repository and open `PioneerTriptorelin.Rproj` in RStudio
+2. Run `renv::restore()` to install dependencies
+3. Open `extras/codeToRun.R`
+4. Fill in all site-specific parameters in **Section 1** (connection details, schema names, cohort IDs)
+5. Set pipeline step flags in **Section 2**
+6. Source the file or run it section by section
+
 
 ## How to Run the Study
 1. In `R`, you will build an `.Renviron` file. An `.Renviron` is an R environment file that sets variables you will be using in your code. It is encouraged to store these inside your environment so that you can protect sensitive information. Below are brief instructions on how to do this:
@@ -83,28 +93,6 @@ See [this video](https://youtu.be/DjVgbBGK4jM) for instructions on how to set up
 # Once you have established an .Renviron file, you must restart your R session for R to pick up these new
 # variables. 
 ````
-
-2. To install the study package (which will build a new R library for you that is specifically for `DaSHDiagnostics`), type the following into a new `R` script and run. You can also retrieve this code from `extras/CodeToRun.R`.
-
-````
-# Prevents errors due to packages being built for other R versions: 
-Sys.setenv("R_REMOTES_NO_ERRORS_FROM_WARNINGS" = TRUE)
-# 
-# First, it probably is best to make sure you are up-to-date on all existing packages.
-# Important: This code is best run in R, not RStudio, as RStudio may have some libraries
-# (like 'rlang') in use.
-#update.packages(ask = "graphics")
-
-# When asked to update packages, select '1' ('update all') (could be multiple times)
-# When asked whether to install from source, select 'No' (could be multiple times)
-#install.packages("devtools")
-#devtools::install_github("bdemeulder/PIONEERmetastaticTreatment")
-````
-In [`CodeToRun.R`](extras/CodeToRun.R) you will find a function `verifyDependencies()` which you can use to verify that all dependencies installed correctly.
-
-*Note: When using this installation method it can be difficult to 'retrace' because you will not see the same folders that you see in the GitHub Repo. If you would prefer to have more visibility into the study contents, you may alternatively download the [TAR file](https://github.com/kiseleveco/DaSHDiagnostic/archive/refs/heads/main.zip) for this repo and bring this into your `R`/`RStudio` environment. An example of how to call ZIP files into your `R` environment can be found in the [The Book of OHDSI](https://ohdsi.github.io/TheBookOfOhdsi/PopulationLevelEstimation.html#running-the-study-package).*
-
-*Note: if you run into the error `LoadLibrary failure: %1 is not a valid Win32 application` when compiling rJava dependencies, try this instead: *devtools::install_github("kiseleveco/DaSHDiagnostics",INSTALL_opts = "--no-multiarch").*
 
 *Note: If you are using the `DatabaseConnector` package for the first time, then you may also need to download the JDBC drivers to your database. See the [package documentation](https://ohdsi.github.io/DatabaseConnector/reference/jdbcDrivers.html), you can do this with a command like `DatabaseConnector::downloadJdbcDrivers(dbms="redshift", pathToDriver="/my-home-folder/jdbcdrivers")`.*
 
